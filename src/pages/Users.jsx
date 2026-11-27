@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import Card from '../components/ui/Card.jsx';
 
 export const USERS = [
   { id: 1, name: 'Aarav Sharma', email: 'aarav@example.com' },
@@ -26,24 +27,47 @@ export default function Users() {
   );
 
   return (
-    <>
-      <h1>Users</h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Users</h1>
+        <p className="mt-2 text-muted">
+          Search and manage application users.
+        </p>
+      </div>
 
-      <p>Viewport width: {width}px</p>
+      <p className="text-sm text-muted">
+        Viewport width: {width}px
+      </p>
 
       <input
+        type="search"
         placeholder="Search users..."
+        aria-label="Search users"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-fg outline-none focus-visible:ring-2 focus-visible:ring-primary sm:max-w-md"
       />
 
-      <ul>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-6">
         {filtered.map((u) => (
-          <li key={u.id}>
-            <Link to={`/users/${u.id}`}>{u.name}</Link>
-          </li>
+          <Card key={u.id}>
+            <h2 className="text-xl font-semibold">{u.name}</h2>
+
+            <p className="mt-2 text-muted">{u.email}</p>
+
+            <Link
+              to={`/users/${u.id}`}
+              className="mt-4 inline-block font-medium text-primary hover:underline"
+            >
+              View Details →
+            </Link>
+          </Card>
         ))}
-      </ul>
-    </>
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="text-muted">No users found.</p>
+      )}
+    </div>
   );
 }
