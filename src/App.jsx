@@ -5,6 +5,7 @@ import Users from './pages/Users.jsx';
 import UserDetail from './pages/UserDetail.jsx';
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
+import './index.css'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+
     </Routes>
   );
 }
